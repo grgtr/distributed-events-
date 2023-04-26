@@ -28,6 +28,7 @@ urlpatterns = [
     path('create_event/', views.create_event, name='create_event'),
 
     path('event/<int:event_id>', views.current_event, name="cur_event"),
+    path('all_participants/<int:stage_id>', views.show_all_participants, name="all_participants"),
     path('event_registration/<int:event_id>', views.current_event_registration, name="cur_event_registration"),
     path('', views.show_events, name="all_events"),
 
