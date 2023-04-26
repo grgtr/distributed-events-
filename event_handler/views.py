@@ -110,8 +110,12 @@ def all_events(request):
 
 
 def show_all_participants(request, stage_id):
-    table = get_list_results_by_stage(stage_id)
-    ans = list((table))
+    try:
+        table = get_list_results_by_stage(stage_id)
+    except Exception as e:
+        print(e)
+        return error404(request)
+    ans = list(table)
     context = {'page_name': 'Все участники',
                'table': ans,
                'navigation_buttons': [
@@ -129,8 +133,6 @@ def show_all_participants(request, stage_id):
                    }
                ]
                }
-    print(table[0])
-    print(type(table[0][0]))
     return render(request, 'event_handler/all_participants.html', context)
 
 def show_events(request):
