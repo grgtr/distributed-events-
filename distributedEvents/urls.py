@@ -23,13 +23,13 @@ from user_handler import views as user_views
 from creator_handler import views as creator_views
 
 urlpatterns = [
-    path('test/', views.show_events, name='test'),
+    #path('test/', views.show_events, name='test'),
     path('admin/', admin.site.urls),
     path('create_event/', views.create_event, name='create_event'),
 
     path('event/<int:event_id>', views.current_event, name="cur_event"),
     path('event_registration/<int:event_id>', views.current_event_registration, name="cur_event_registration"),
-    path('', views.all_events, name="all_events"),
+    path('', views.show_events, name="all_events"),
 
     path('register/', user_views.register, name='register'),
     path('user_profile/', user_views.profile, name='user_profile'),

@@ -107,6 +107,7 @@ def all_events(request):
 
     return render(request, 'event_handler/all_events.html', context)
 
+
 def show_events(request):
     """
     Страница всех мероприятий

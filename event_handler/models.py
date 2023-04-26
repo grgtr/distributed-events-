@@ -128,6 +128,7 @@ class StageParticipants(models.Model):
     :param status: статус
     :param venue: Место проведения
     :param role: Роль
+    :param score: Баллы
 
     """
     class Status(models.IntegerChoices):
@@ -165,6 +166,7 @@ class StageParticipants(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     role = models.SmallIntegerField("Роль", choices=Roles.choices, default=Roles.PARTICIPANT)
     status = models.SmallIntegerField("Статус заявки", choices=Status.choices, default=Status.AWAITED)
+    score = models.SmallIntegerField("Количество баллов", null=True)
 
     class Meta:
         """

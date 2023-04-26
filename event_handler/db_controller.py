@@ -1,5 +1,5 @@
 from user_handler.models import User, PersonalData
-from event_handler.models import Stage, Event, StageStaff
+from event_handler.models import Stage, Event, StageStaff, StageParticipants
 
 from user_handler.db_controller import create_user_for_django_user
 
@@ -11,6 +11,15 @@ from typing import Union, List, Tuple, Set
 from itertools import chain
 
 ITEMS_PER_PAGE = 12  # Количество объектов в одной странице выдачи
+
+import itertools
+
+def get_list_results_by_stage(stage_id: int):
+    info_stage = get_stage_by_id(stage_id)
+    #participants = StageParticipants.objects.filter(stage=stage_id).values_list('user', 'role', 'score')
+    participants = StageParticipants.objects.filter(stage=stage_id).order_by('score').values_list('user', 'role', 'score').reverse()
+    #print(participants, "participants")
+    return list(participants)
 
 def get_info_event(event_id: int) -> Union[Event]:
     """
@@ -154,3 +163,6 @@ def get_stages_by_event(event: Event):
 
 def get_event_by_stage(stage: Stage) -> Event:
     return stage.parent
+
+def get_stage_by_id(stage_id: int):
+    return Stage.objects.get(id=stage_id)

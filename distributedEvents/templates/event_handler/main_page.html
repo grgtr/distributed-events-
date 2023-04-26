@@ -13,7 +13,6 @@
 <div class="lots_of_events">
     <h1 class="handler">Открытые мероприятия</h1>
     {% for event, stage, status in event_list_open %}
-    <h1 class="handler">Открытые мероприятия</h1>
     <div class="event_card-wrapper">
         <div class="event_card">
             <a class="event_name" href="/event/{{ event.id }}">{{ event.name }}</a>
