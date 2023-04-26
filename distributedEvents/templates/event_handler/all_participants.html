@@ -24,9 +24,11 @@
         </thead>
         <tbody>
         {% for list in table %}
+            <tr>
             {% for elem in list%}
-              <td>elem</td>
+              <td>{{elem}}</td>
             {% endfor %}
+            </tr>
         {% endfor %}
         </tbody>
     </table>

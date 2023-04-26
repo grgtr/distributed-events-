@@ -20,7 +20,7 @@ def get_list_results_by_stage(stage_id: int):
     info_stage = get_stage_by_id(stage_id)
     #participants = StageParticipants.objects.filter(stage=stage_id).values_list('user', 'role', 'score')
     #participants = StageParticipants.objects.filter(stage=stage_id).order_by('score').values_list('user', 'role', 'score').reverse()
-    participants = StageParticipants.objects.filter(stage=stage_id).order_by('-score', '-role')
+    participants = StageParticipants.objects.filter(stage=stage_id).order_by('-role', '-score')
     answer = []
     for index, participant in enumerate(participants):
         role = ""
