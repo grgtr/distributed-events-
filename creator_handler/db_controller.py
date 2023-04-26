@@ -5,8 +5,7 @@ from user_handler.models import DjangoUser, User
 from django.core.exceptions import ObjectDoesNotExist
 from enum import Enum
 
-from event_handler.db_controller import get_user_by_django_user, get_stages_by_event, get_event_by_id, get_event_by_stage
-
+from event_handler.db_controller import get_user_by_django_user, get_stages_by_event, get_event_by_id, get_event_by_stage, get_stage_by_id
 
 def get_participants_by_event(event: Event):
     stage = get_stages_by_event(event).first()
@@ -209,5 +208,3 @@ def euler_bypass(stage: int, adjacency_list, depth: int, answer, stages_by_id):
         euler_bypass(previous_stage, adjacency_list, depth + 1, answer, stages_by_id)
 
 
-def get_stage_by_id(stage_id: int):
-    return Stage.objects.get(id=stage_id)

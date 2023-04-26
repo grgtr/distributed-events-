@@ -1,5 +1,5 @@
 from user_handler.models import User, PersonalData
-from event_handler.models import Stage, Event, StageStaff
+from event_handler.models import Stage, Event, StageStaff, StageParticipants
 
 from user_handler.db_controller import create_user_for_django_user
 
@@ -10,7 +10,32 @@ from typing import Union, List, Tuple, Set
 
 from itertools import chain
 
+from collections import namedtuple
+
 ITEMS_PER_PAGE = 12  # Количество объектов в одной странице выдачи
+
+import itertools
+
+def get_list_results_by_stage(stage_id: int):
+    info_stage = get_stage_by_id(stage_id)
+    #participants = StageParticipants.objects.filter(stage=stage_id).values_list('user', 'role', 'score')
+    #participants = StageParticipants.objects.filter(stage=stage_id).order_by('score').values_list('user', 'role', 'score').reverse()
+    participants = StageParticipants.objects.filter(stage=stage_id).order_by('-score', '-role')
+    answer = []
+    for index, participant in enumerate(participants):
+        role = ""
+        if participant.role == 0:
+            role = "Участник"
+        elif participant.role == 10:
+            role = "Призер"
+        else:
+            role = "Победитель"
+        list = namedtuple("namedtuplelist","num name_all status_score total_score")
+        #answer.append((index + 1, participant.user.personal_data, role, participant.score))
+        answer.append(list(num=(index + 1), name_all=(participant.user.personal_data), status_score=(role), total_score=(participant.score)))
+    # (user, role, score)
+    #print(participants, "participants")
+    return answer
 
 
 def get_info_event(event_id: int) -> Union[Event]:
@@ -168,3 +193,7 @@ def check_user_participate_in_stage(django_user: User, stage: Stage) -> bool:
     if stage in map(lambda stage_part: stage_part.stage, get_user_stages(get_user_by_django_user(django_user))):
         return True
     return False
+
+def get_stage_by_id(stage_id: int):
+    return Stage.objects.get(id=stage_id)
+

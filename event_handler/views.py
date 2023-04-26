@@ -108,6 +108,31 @@ def all_events(request):
 
     return render(request, 'event_handler/all_events.html', context)
 
+
+def show_all_participants(request, stage_id):
+    table = get_list_results_by_stage(stage_id)
+    ans = list((table))
+    context = {'page_name': 'Все участники',
+               'table': ans,
+               'navigation_buttons': [
+                   {
+                       'name': "О нас",
+                       'href': "https://hsse.mipt.ru/"
+                   },
+                   {
+                       'name': "Создать мероприятие",
+                       'href': "/create_event"
+                   },
+                   {
+                       'name': "Профиль",
+                       'href': "../user_profile"
+                   }
+               ]
+               }
+    print(table[0])
+    print(type(table[0][0]))
+    return render(request, 'event_handler/all_participants.html', context)
+
 def show_events(request):
     """
     Страница всех мероприятий
