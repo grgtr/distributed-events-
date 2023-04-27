@@ -29,4 +29,4 @@ class StageStaffAdmin(admin.ModelAdmin):
 
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "address", "parental_event", "contacts")
+    list_display = ("id", "name", "address", "parental_stage", "contacts")

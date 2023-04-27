@@ -168,17 +168,6 @@
     }
   },
   {
-    "model": "event_handler.venue",
-    "pk": 1,
-    "fields": {
-      "name": "Первая и единственная площадка",
-      "address": "ya.ru",
-      "region": null,
-      "participants_maximum": null,
-      "parental_event": 2
-    }
-  },
-  {
     "model": "event_handler.stage",
     "pk": 1,
     "fields": {
@@ -223,50 +212,6 @@
       "settings": 1,
       "time_start": "2022-12-15T16:24:50Z",
       "time_end": "2022-12-22T16:24:54Z"
-    }
-  },
-  {
-    "model": "event_handler.stageparticipants",
-    "pk": 2,
-    "fields": {
-      "stage": 1,
-      "user": 2,
-      "venue": 1,
-      "role": 0,
-      "status": 0
-    }
-  },
-  {
-    "model": "event_handler.stageparticipants",
-    "pk": 3,
-    "fields": {
-      "stage": 2,
-      "user": 4,
-      "venue": 1,
-      "role": 10,
-      "status": 400
-    }
-  },
-  {
-    "model": "event_handler.stageparticipants",
-    "pk": 4,
-    "fields": {
-      "stage": 3,
-      "user": 4,
-      "venue": 1,
-      "role": 10,
-      "status": 200
-    }
-  },
-  {
-    "model": "event_handler.stagestaff",
-    "pk": 1,
-    "fields": {
-      "stage": 1,
-      "user": 6,
-      "venue": 1,
-      "role": 100,
-      "status": 200
     }
   },
   {

@@ -28,37 +28,7 @@ class Event(models.Model):
         ordering = ['name']
 
 
-class Venue(models.Model):
-    """
-    Класс **Venue**
 
-    Площадка и информация о ней
-
-    :param name: название этапа
-    :param address: адрес проведения
-    :param region: Регион, в котором площадка
-    :param participants_maximum: Максимальное число участников
-    :param parental_event: Event
-    :param contacts: Контакты
-
-    """
-    name = models.CharField("Название", max_length=50)
-    address = models.TextField("Адрес", max_length=500)
-    region = models.SmallIntegerField("Регион, в котором площадка", null=True, blank=True)
-    participants_maximum = models.IntegerField("Максимальное число участников", null=True, blank=True)
-    parental_event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
-    contacts = models.TextField("Контакты", max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        """
-        Настройка отображения в админ-панели
-        """
-        verbose_name = 'Площадка проведения'
-        verbose_name_plural = 'Площадки проведения'
-        ordering = ['name']
 
 
 class Stage(models.Model):
@@ -118,6 +88,41 @@ class Stage(models.Model):
         verbose_name = 'Этап'
         verbose_name_plural = 'Этапы'
         ordering = ['name']
+
+class Venue(models.Model):
+    """
+    Класс **Venue**
+
+    Площадка и информация о ней
+
+    :param name: название этапа
+    :param address: адрес проведения
+    :param region: Регион, в котором площадка
+    :param participants_maximum: Максимальное число участников
+    :param parental_stage: Stage, на котором проводится мероприятие
+    :param contacts: Контакты
+
+    """
+    name = models.CharField("Название", max_length=50)
+    address = models.TextField("Адрес", max_length=500)
+    region = models.SmallIntegerField("Регион, в котором площадка", null=True, blank=True)
+    participants_maximum = models.IntegerField("Максимальное число участников", null=True, blank=True)
+    parental_stage = models.ForeignKey(Stage, null=True, on_delete=models.SET_NULL)
+    contacts = models.TextField("Контакты", max_length=100, null=True, blank=True)
+
+    #parental_event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        """
+        Настройка отображения в админ-панели
+        """
+        verbose_name = 'Площадка проведения'
+        verbose_name_plural = 'Площадки проведения'
+        ordering = ['name']
+
 
 class StageParticipants(models.Model):
     """
