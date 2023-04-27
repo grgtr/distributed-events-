@@ -196,4 +196,3 @@ def check_user_participate_in_stage(django_user: User, stage: Stage) -> bool:
 
 def get_stage_by_id(stage_id: int):
     return Stage.objects.get(id=stage_id)
-

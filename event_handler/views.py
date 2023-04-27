@@ -340,3 +340,36 @@ def current_stage_registration(request, stage_id):
     }
 
     return render(request, 'event_handler/stage_registration.html', context)
+
+def current_stage(request, event_id, stage_id):
+    """
+    Страница этапа мероприятия
+
+    :param request: объект с деталями запроса
+    :type request: :class: 'django.http.HttpRequest'
+    :param stage_id: id этапа
+    :type stage_id: :class: 'int'
+    :return: html страница
+    """
+
+    stage = get_stage_by_id(stage_id)
+    venues_list = get_venues_by_stage_id(stage_id).values_list()
+    context = {
+        'stage': stage,
+        'venues_list': venues_list,
+        'navigation_buttons': [
+            {
+                'name': "Главная",
+                'href': "/"
+            },
+            {
+                'name': "Создать мероприятие",
+                'href': "/create_event/"
+            },
+            {
+                'name': "Профиль",
+                'href': "/user_profile"
+            }
+        ]
+    }
+    return render(request, 'event_handler/stage.html', context)
