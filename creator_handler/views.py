@@ -31,9 +31,13 @@ NAVIGATE_BUTTONS = [
         'name': "Персонал",
         'href': "../staff"
     },
+    # {
+    #     'name': "Настройки",
+    #     'href': "../settings"
+    # },
     {
-        'name': "Настройки",
-        'href': "../settings"
+        'name': "Этапы",
+        'href': "../stages"
     }
 ]
 
@@ -321,7 +325,7 @@ def create_stage(request, event_id: int):
         return JsonResponse({}, status=403)
     try:
         next_stage = get_stage_by_id(json_load(request)["next_stage_id"])
-        make_record_stage("test", get_event_by_id(event_id), next_stage=next_stage)
+        make_record_stage("Новый этап", get_event_by_id(event_id), next_stage=next_stage)
         return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
@@ -337,6 +341,24 @@ def delete_stage(request, event_id: int):
     try:
         stage_id = json_load(request)["stage_id"]
         delete_stage_recursive(stage_id)
+    except Exception as e:
+        print(e)
+        return JsonResponse({"errors": "undefined"}, status=400)
+
+
+@login_required(login_url="login")
+def edit_stage(request, event_id: int):
+    if not user_have_access(request.user, event_id):
+        return error404(request)
+    if request.method != "POST":
+        return JsonResponse({}, status=403)
+    try:
+        stage_id = json_load(request)["stage_id"]
+        name = json_load(request)["name"]
+        description = json_load(request)["description"]
+        contacts = json_load(request)["contacts"]
+        can_register = json_load(request)["can_register"]
+        edit_stage(stage_id, name, description, contacts, can_register)
     except Exception as e:
         print(e)
         return JsonResponse({"errors": "undefined"}, status=400)

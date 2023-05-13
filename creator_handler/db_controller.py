@@ -204,9 +204,17 @@ def get_formatted_stages(event_id: int):
     return answer
 
 
-def euler_bypass(stage: int, adjacency_list, depth: int, answer, stages_by_id):
-    answer.append((stages_by_id[stage], depth))
-    for previous_stage in adjacency_list.setdefault(stage, []):
+def euler_bypass(stage_id: int, adjacency_list, depth: int, answer, stages_by_id):
+    answer.append((stages_by_id[stage_id], depth))
+    for previous_stage in adjacency_list.setdefault(stage_id, []):
         euler_bypass(previous_stage, adjacency_list, depth + 1, answer, stages_by_id)
 
 
+def edit_stage(stage_id: int, name, description, contacts, can_register):
+    stage = get_stage_by_id(stage_id)
+    stage.name = name
+    stage.description = description
+    stage.contacts = contacts
+    stage.settings.can_register = can_register
+    stage.save()
+    stage.settings.save()
