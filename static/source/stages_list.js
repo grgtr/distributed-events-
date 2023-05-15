@@ -1,5 +1,4 @@
 function deleteStage(stage) {
-    console.log("WHERE BANANA")
     fetch(document.URL + "delete",
          {
              method: "POST",
