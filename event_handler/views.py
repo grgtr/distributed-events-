@@ -109,7 +109,7 @@ def all_events(request):
     return render(request, 'event_handler/all_events.html', context)
 
 
-def show_all_participants(request, stage_id):
+def show_all_participants(request, event_id, stage_id):
     try:
         table = get_list_results_by_stage(stage_id)
     except Exception as e:

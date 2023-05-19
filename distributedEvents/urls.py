@@ -31,7 +31,7 @@ urlpatterns = [
     path('event/<int:event_id>/stage/<int:stage_id>', views.current_stage, name="current_stage"),
     path('stage_registration/<int:stage_id>', views.current_stage_registration, name="current_stage_registration"),
     path('', views.show_events, name="all_events"),
-    path('all_participants/<int:stage_id>', views.show_all_participants, name="all_participants"),
+    path('event/<int:event_id>/stage/<int:stage_id>/all_participants', views.show_all_participants, name="all_participants"),
 
 
     path('register/', user_views.register, name='register'),
