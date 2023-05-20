@@ -120,6 +120,10 @@ def show_all_participants(request, event_id, stage_id):
                'table': ans,
                'navigation_buttons': [
                    {
+                       'name': "Главная",
+                       'href': "/"
+                   },
+                   {
                        'name': "О нас",
                        'href': "https://hsse.mipt.ru/"
                    },
@@ -308,7 +312,21 @@ def current_event(request, event_id):
         'open_stages': [(stage, check_user_participate_in_stage(request.user, stage))
                         for stage in open_stages],
         'waiting_status': Stage.Status.WAITING,
-        'active_status': Stage.Status.ACTIVE
+        'active_status': Stage.Status.ACTIVE,
+        'navigation_buttons': [
+            {
+                'name': "Главная",
+                'href': "/"
+            },
+            {
+                'name': "Создать мероприятие",
+                'href': "/create_event/"
+            },
+            {
+                'name': "Профиль",
+                'href': "/user_profile"
+            }
+        ]
     }
 
     return render(request, 'event_handler/event.html', context)
