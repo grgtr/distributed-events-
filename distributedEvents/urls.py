@@ -1,4 +1,4 @@
-"""eventsss URL Configuration
+"""eventss URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -41,27 +41,27 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='user_handler/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='user_handler/logout.html'), name='logout'),
 
-    path('events/edit/<int:event_id>/venues/', creator_views.venues_list, name="test"),
-    path('events/edit/<int:event_id>/venues/edit/<int:venue_id>', creator_views.edit_venue, name="edit_venue"),
-    path('events/edit/<int:event_id>/venues/create', creator_views.create_venue, name="create_venue"),
-    path('events/edit/<int:event_id>/venues/delete', creator_views.delete_venue, name="delete_venue"),
+    path('event/<int:event_id>/edit/venue/', creator_views.venues_list, name="test"),
+    path('event/<int:event_id>/edit/venue/<int:venue_id>', creator_views.edit_venue, name="edit_venue"),
+    path('event/<int:event_id>/edit/venue/create', creator_views.create_venue, name="create_venue"),
+    path('event/<int:event_id>/edit/venue/delete', creator_views.delete_venue, name="delete_venue"),
 
-    path('events/edit/<int:event_id>/stages/', creator_views.stages_list, name="stages_list"),
-    path('events/edit/<int:event_id>/stages/create', creator_views.create_stage, name="create_stage"),
-    path('events/edit/<int:event_id>/stages/delete', creator_views.delete_stage, name="delete_stage"),
+    path('event/<int:event_id>/edit/stages/', creator_views.stages_list, name="stages_list"),
+    path('event/<int:event_id>/edit/stages/create', creator_views.create_stage, name="create_stage"),
+    path('event/<int:event_id>/edit/stages/delete', creator_views.delete_stage, name="delete_stage"),
 
-    # path('events/edit/<int:event_id>/stages/', creator_views.stages_list, name="test"),
-    # path('events/edit/<int:event_id>/stages/edit/<int:venue_id>', creator_views.edit_stage, name="edit_stage"),
-    # path('events/edit/<int:event_id>/stages/create', creator_views.create_stage, name="create_stage"),
-    # path('events/edit/<int:event_id>/stages/delete', creator_views.delete_stage, name="delete_stage"),
-    path('events/edit/<int:event_id>/staff', creator_views.view_staff, name="view_staff"),
-    # path('events/stages/edit/add_staff', creator_views.add_staff, name="add_staff"),
+    # path('event/<int:event_id>/edit/stages/', creator_views.stages_list, name="test"),
+    # path('event/<int:event_id>/edit/stages/edit/<int:venue_id>', creator_views.edit_stage, name="edit_stage"),
+    # path('event/<int:event_id>/edit/stages/create', creator_views.create_stage, name="create_stage"),
+    # path('event/<int:event_id>/edit/stages/delete', creator_views.delete_stage, name="delete_stage"),
+    path('event/<int:event_id>/edit/staff', creator_views.view_staff, name="view_staff"),
+    # path('event/edit/stages/add_staff', creator_views.add_staff, name="add_staff"),
 
-    path('events/edit/<int:event_id>/participants/', creator_views.participants_list, name="participants_list"),
-    path('events/edit/<int:event_id>/participants/reject', creator_views.reject_participant, name="reject_participant"),
-    path('events/edit/<int:event_id>/participants/accepted', creator_views.accept_participant,
+    path('event/<int:event_id>/edit/participants/', creator_views.participants_list, name="participants_list"),
+    path('event/<int:event_id>/edit/participants/reject', creator_views.reject_participant, name="reject_participant"),
+    path('event/<int:event_id>/edit/participants/accepted', creator_views.accept_participant,
          name="accept_participant"),
-    path('events/edit/<int:event_id>/participants/ban', creator_views.ban_participant, name="ban_participant"),
+    path('event/<int:event_id>/edit/participants/ban', creator_views.ban_participant, name="ban_participant"),
 
-    path('events/edit/<int:event_id>/participants/make_newsletter', creator_views.make_newsletter, name='make_newsletter')
+    path('event/<int:event_id>/edit/participants/make_newsletter', creator_views.make_newsletter, name='make_newsletter')
 ]

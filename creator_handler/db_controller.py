@@ -94,7 +94,7 @@ def is_venue_attached_to_event(event_id: int, venue_id: int) -> bool:
     try:
         venue = get_venue_by_id(venue_id)
         event_stages = get_stages_by_event(get_event_by_id(event_id))
-        print(event_stages, "//", venue, "//",venue.parental_stage, "//", event_id)
+        #print(event_stages, "//", venue, "//",venue.parental_stage, "//", event_id)
         is_attached = False
         for stage in event_stages:
             if stage == venue.parental_stage:

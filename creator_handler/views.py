@@ -25,7 +25,7 @@ NAVIGATE_BUTTONS = [
     },
     {
         'name': "Площадки",
-        'href': "../venues"
+        'href': "../venue"
     },
     {
         'name': "Персонал",
@@ -174,7 +174,29 @@ def view_staff(request, event_id):
     :return: html страница
     """
 
-    context = {"navigation_buttons": NAVIGATE_BUTTONS}
+    context = {"navigation_buttons": [
+        {
+            'name': "Главная",
+            'href': "/"
+        },
+        {
+            'name': "Участники",
+            'href': "participants"
+        },
+        {
+            'name': "Площадки",
+            'href': "venue"
+        },
+        {
+            'name': "Персонал",
+            'href': "staff"
+        },
+        {
+            'name': "Этапы",
+            'href': "stages"
+        }
+        ]
+    }
     # context["staff_list"] = get_staff_by_stage(stage_id)
 
     return render(request, 'creator_handler/view_staff.html', context)
@@ -261,7 +283,7 @@ def create_venue(request, event_id: int):
                 contacts,
                 event_id
             )
-            return redirect(f'/events/edit/{event_id}/venues/')
+            return redirect(f'/events/{event_id}/edit/venue/')
     else:
         form = VenueForm()
     context = {
@@ -285,7 +307,7 @@ def edit_venue(request, event_id: int, venue_id: int):
             participants_maximum = form.cleaned_data['participants_maximum']
             contacts = form.cleaned_data['contacts']
             c_db.edit_venue(name, address, region, participants_maximum, contacts, venue_id)
-            return redirect(f'/events/edit/{event_id}/venues/')
+            return redirect(f'event/{event_id}/edit/venue/')
     else:
         venue_data = c_db.get_venue_by_id_dict(venue_id)
 
@@ -306,7 +328,7 @@ def make_newsletter(request, event_id: int):
         if form.is_valid():
             subject = form.cleaned_data['subject']
             text = form.cleaned_data['text']
-            email.send_message(c_db.get_participants_by_event(event_id), text, subject)
+            email.send_message(c_db.get_participants_by_event(get_event_by_id(event_id)), text, subject)
             return redirect(f'/events/edit/{event_id}/participants/')
     form = EmailForm()
     return render(request, 'creator_handler/create_newsletter.html', {"form": form})
@@ -318,6 +340,7 @@ def stages_list(request, event_id: int):
         return error404(request)
 
     context = {
+        "navigation_buttons": NAVIGATE_BUTTONS,
         'stages_list': get_formatted_stages(event_id)
     }
     return render(request, 'creator_handler/stages_list.html', context)
