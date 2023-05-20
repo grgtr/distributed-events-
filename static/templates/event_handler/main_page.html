@@ -12,24 +12,22 @@
 {% include "layouts/navigation_bar.html" %}
 <div class="lots_of_events">
     <h1 class="handler">Открытые мероприятия</h1>
-    {% for event, stage, status in event_list_open %}
+    {% for event, status in event_list_open %}
     <div class="event_card-wrapper">
         <div class="event_card">
             <a class="event_name" href="/event/{{ event.id }}">{{ event.name }}</a>
-            <h4 class="event_time">{{ stage.time_start }} - {{ stage.time_end }}</h4>
-            <h4 class="event_preview">{{ stage.preview }}</h4>
+            <h4 class="event_preview">{{ event.description }}</h4>
             <!--  <h4>{{ status }}</h4> -->
             <a class="event_registration" href="/event_registration/{{ event.id }}">зарегистрироваться</a>
         </div>
     </div>
     {% endfor %}
     <h1 class="handler">Закрытые мероприятия</h1>
-     {% for event, stage, status in event_list_closed %}
+     {% for event, status in event_list_closed %}
     <div class="event_card-wrapper">
         <div class="event_card">
             <a class="event_name" href="/event/{{ event.id }}">{{ event.name }}</a>
-            <h4 class="event_time">{{ stage.time_start }} - {{ stage.time_end }}</h4>
-            <h4 class="event_preview">{{ stage.preview }}</h4>
+            <h4 class="event_preview">{{ event.description }}</h4>
             <!--  <h4>{{ status }}</h4> -->
             <!-- <a class="event_registration" href="/event_registration/{{ event.id }}">зарегистрироваться</a> -->
         </div>

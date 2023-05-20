@@ -56,7 +56,7 @@ def get_open_or_closed_events(django_user: DjangoUser = None, is_open: bool = Tr
     """
     Получить список открытых или закрытых мероприятий по заданным параметрам
     :param django_user: Пользователь, сделавший запрос
-    :return: Список из троек: мероприятие, его первый этап, bool участвует ли django_user в этом мероприятии
+    :return: Список из пар: мероприятие, bool участвует ли django_user в этом мероприятии
 
     """
 
@@ -72,9 +72,9 @@ def get_open_or_closed_events(django_user: DjangoUser = None, is_open: bool = Tr
 
     for event in parents_event:
         if event in user_events:
-            result.append((event, event.stage_set.first, True))
+            result.append((event, True))
         else:
-            result.append((event, event.stage_set.first, False))
+            result.append((event, False))
     return result
 
 
