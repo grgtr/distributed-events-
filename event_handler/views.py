@@ -101,7 +101,7 @@ def all_events(request):
                    },
                    {
                        'name': "Профиль",
-                       'href': "../user_profile"
+                       'href': "/user_profile"
                    }
                ]
                }
@@ -129,7 +129,7 @@ def show_all_participants(request, event_id, stage_id):
                    },
                    {
                        'name': "Профиль",
-                       'href': "../user_profile"
+                       'href': "/user_profile"
                    }
                ]
                }
@@ -166,7 +166,7 @@ def show_events(request):
                    },
                    {
                        'name': "Профиль",
-                       'href': "../user_profile"
+                       'href': "/user_profile"
                    }
                ]
                }
@@ -264,7 +264,7 @@ def staff_event_list(request):
 #             },
 #             {
 #                 'name': "Профиль",
-#                 'href': "../user_profile"
+#                 'href': "/user_profile"
 #             }
 #         ]
 #                    }
