@@ -112,6 +112,7 @@ def all_events(request):
 def show_all_participants(request, event_id, stage_id):
     try:
         table = get_list_results_by_stage(stage_id)
+        #print(table)
     except Exception as e:
         print(e)
         return error404(request)
@@ -372,6 +373,7 @@ def current_stage(request, event_id, stage_id):
 
     stage = get_stage_by_id(stage_id)
     venues_list = get_venues_by_stage_id(stage_id).values_list()
+    #print(venues_list)
     context = {
         'stage': stage,
         'venues_list': venues_list,

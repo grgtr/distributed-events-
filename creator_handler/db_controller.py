@@ -26,6 +26,7 @@ class SettingsSet(Enum):
 def get_venues_by_event(event_id: int):
     return Venue.objects.filter(parental_event_id=event_id)
 
+
 def get_venues_by_stage_id(stage_id: int):
     return Venue.objects.filter(parental_stage_id=stage_id)
 
@@ -46,6 +47,7 @@ def get_venue_by_id_dict(venue_id: int):
 
 def user_have_access(django_user: DjangoUser, event_id: int, setting=-1) -> bool:
     user = get_user_by_django_user(django_user)
+    #print(user)
     try:
         stage = get_stages_by_event(get_event_by_id(event_id)).filter(next_stage__isnull=True).first()
         staff = StageStaff.objects.get(user=user, stage=stage)
@@ -91,7 +93,14 @@ def edit_venue(name: str, address: str, region: int, participants_maximum: int, 
 def is_venue_attached_to_event(event_id: int, venue_id: int) -> bool:
     try:
         venue = get_venue_by_id(venue_id)
-        return venue.parental_event.id == event_id
+        event_stages = get_stages_by_event(get_event_by_id(event_id))
+        print(event_stages, "//", venue, "//",venue.parental_stage, "//", event_id)
+        is_attached = False
+        for stage in event_stages:
+            if stage == venue.parental_stage:
+                is_attached = True
+                break
+        return is_attached
     except ObjectDoesNotExist:
         return False
 
@@ -138,7 +147,7 @@ def get_stage_subtree(stage: int, to_delete):
 def delete_stage_recursive(stage: int):
     to_delete = []
     get_stage_subtree(stage, to_delete)
-    print(to_delete)
+    #print(to_delete)
     Stage.objects.filter(id__in=to_delete).delete()
 
 

@@ -99,7 +99,7 @@ class Venue(models.Model):
     :param address: адрес проведения
     :param region: Регион, в котором площадка
     :param participants_maximum: Максимальное число участников
-    :param parental_stage_id: Stage, на котором проводится мероприятие
+    :param parental_stage: Stage, на котором проводится мероприятие
     :param contacts: Контакты
 
     """
@@ -107,7 +107,7 @@ class Venue(models.Model):
     address = models.TextField("Адрес", max_length=500)
     region = models.SmallIntegerField("Регион, в котором площадка", null=True, blank=True)
     participants_maximum = models.IntegerField("Максимальное число участников", null=True, blank=True)
-    parental_stage_id = models.ForeignKey(Stage, null=True, on_delete=models.SET_NULL)
+    parental_stage = models.ForeignKey(Stage, null=True, on_delete=models.SET_NULL)
     contacts = models.TextField("Контакты", max_length=100, null=True, blank=True)
 
     #parental_event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)

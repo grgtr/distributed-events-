@@ -208,10 +208,16 @@ def add_staff(request):
 def venues_list(request, event_id: int):
     if not c_db.user_have_access(request.user, event_id):
         return redirect('/404')
-    venues = c_db.get_venues_by_event(event_id)
+    all_stages = c_db.get_stages_by_event(c_db.get_event_by_id(event_id))
+    #print(all_stages)
+    venues_list = []
+    for stage in all_stages:
+        venues_from_stage  = c_db.get_venues_by_stage_id(stage.id).values_list()
+        venues_list.extend(venues_from_stage)
+    #print(venues_list)
     event = get_event_by_id(event_id)
     context = {
-        "venues_list": venues,
+        "venues_list": venues_list,
         "navigation_buttons": NAVIGATE_BUTTONS,
         "event": event,
     }
