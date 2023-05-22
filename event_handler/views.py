@@ -355,7 +355,7 @@ def current_stage_registration(request, stage_id):
     stage = get_stage_by_id(stage_id)
     context = {
         'stage': stage,
-        'venues_list': get_venues_by_event(get_event_by_stage(stage).id)
+        'venues_list': get_venues_by_stage_id(stage_id)
     }
 
     return render(request, 'event_handler/stage_registration.html', context)
