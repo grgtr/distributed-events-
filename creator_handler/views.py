@@ -16,10 +16,6 @@ import user_handler.db_controller as u_db
 
 NAVIGATE_BUTTONS = [
     {
-        'name': "Главная",
-        'href': "/"
-    },
-    {
         'name': "Участники",
         'href': "../participants"
     },
@@ -31,10 +27,6 @@ NAVIGATE_BUTTONS = [
         'name': "Персонал",
         'href': "../staff"
     },
-    # {
-    #     'name': "Настройки",
-    #     'href': "../settings"
-    # },
     {
         'name': "Этапы",
         'href': "../stages"
@@ -174,29 +166,7 @@ def view_staff(request, event_id):
     :return: html страница
     """
 
-    context = {"navigation_buttons": [
-        {
-            'name': "Главная",
-            'href': "/"
-        },
-        {
-            'name': "Участники",
-            'href': "participants"
-        },
-        {
-            'name': "Площадки",
-            'href': "venue"
-        },
-        {
-            'name': "Персонал",
-            'href': "staff"
-        },
-        {
-            'name': "Этапы",
-            'href': "stages"
-        }
-        ]
-    }
+    context = {"navigation_buttons": NAVIGATE_BUTTONS }
     # context["staff_list"] = get_staff_by_stage(stage_id)
 
     return render(request, 'creator_handler/view_staff.html', context)
@@ -341,7 +311,8 @@ def stages_list(request, event_id: int):
 
     context = {
         "navigation_buttons": NAVIGATE_BUTTONS,
-        'stages_list': get_formatted_stages(event_id)
+        'stages_list': get_formatted_stages(event_id),
+        "event": get_event_by_id(event_id)
     }
     return render(request, 'creator_handler/stages_list.html', context)
 

@@ -23,24 +23,6 @@ body {
    margin-bottom: 30px;
 }
 
-/*navigation bar*/
-.navbar-nav {
-    margin-left: auto!important;
-    margin-right: auto!important;
-}
-.my-navbar {
-    background-color: #fc3f1d;
-}
-.nav-link {
-    margin-left: 10px!important;
-    margin-right: 10px!important;
-    color: #f6f5f3d4!important;
-    font-size: 20px!important;
-}
-.nav-link:hover {
-    color: #ffffff!important;
-}
-
 /*table*/
 .btn.btn-primary {
     margin-top: 40px;
