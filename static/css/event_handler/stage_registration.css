@@ -1,0 +1,16 @@
+@import url(../blocks/stage/stage.css);
+@import url(../blocks/stage/__label/_time/stage__label_time.css);
+@import url(../blocks/stage/__name/stage__name.css);
+@import url(../blocks/stage/__field/stage__field.css);
+@import url(../blocks/stage/__textarea/stage__textarea.css);
+@import url(../blocks/stage/__time/stage__time.css);
+@import url(../blocks/stage/__venue-list/stage__venue-list.css);
+@import url(../blocks/table/table.css);
+@import url(../blocks/table/__head/table__head.css);
+@import url(../blocks/table/__title/table__title.css);
+@import url(../blocks/table/__data/table__data.css);
+@import url(../blocks/table/__button/table__button.css);
+
+.page {
+    min-width: 1100px;
+}

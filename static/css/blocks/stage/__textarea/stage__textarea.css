@@ -1,0 +1,9 @@
+.stage__textarea {
+    min-height: 100px;
+    margin: 0;
+    padding: 0 5px 5px 5px;
+    background-color: #ABCDEF;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 20px;
+}

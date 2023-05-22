@@ -1,0 +1,8 @@
+.table__button {
+    height: 50px;
+    background-color: #FF8614;
+    border-radius: 10px;
+}
+.table__button:hover {
+    opacity: 0.8;
+}

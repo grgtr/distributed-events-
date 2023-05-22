@@ -355,7 +355,14 @@ def current_stage_registration(request, stage_id):
     stage = get_stage_by_id(stage_id)
     context = {
         'stage': stage,
-        'venues_list': get_venues_by_stage_id(stage_id)
+        'venues_list': get_venues_by_stage_id(stage_id),
+        'can_register': not is_user_participates_in_stage(get_user_by_django_user(request.user), stage),
+        'navigation_buttons': [
+            {
+                'name': "Обратно к мероприятию",
+                'href': f"/event/{get_event_by_stage(stage).id}"
+            }
+        ]
     }
 
     return render(request, 'event_handler/stage_registration.html', context)

@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'vendor/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/event_handler/all_events.css' %}">
-    <title>{{ name }}</title>
+    <link rel="stylesheet" href="{% static 'css/event_handler/stage_registration.css' %}">
+    <title>{{ stage.name }}</title>
 </head>
-<body>
-{% include "layouts/navigation_bar.html" %}
-<div class="lots_of_events">
-    <h1 class="handler">{{ stage.name }}</h1>
-    <h2 class="current_stage_time">Сроки проведения: {% if stage.time_start %}{{ stage.time_start }}{% else %}Неизвестно{% endif %} - {% if stage.time_end %}{{ stage.time_end }}{% else %}Неизвестно{% endif %}</h2>
-    <h1 class="full_stage_description_handler">Описание</h1>
-    <h3 class="full_stage_description">{{ description }}</h3>
-    <div class="table-area">
-        <table class="table" id="table">
-            <thead>
-            <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Адрес</th>
-                <th scope="col">Регион</th>
-                <th scope="col">Вместимость</th>
-                <th scope="col">Контакты</th>
-                <th scope="col">Действие</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for venue in venues_list %}
-            <tr>
-                <th scope="row">{{ venue.name }}</th>
-                <td>{{ venue.address }}</td>
-                {% if venue.region %}
-                <td>{{ venue.region }}</td>
-                {% else %}
-                <td></td>
-                {% endif %}
-                {% if venue.participants_maximum %}
-                <td>{{ venue.participants_maximum }}</td>
-                {% else %}
-                <td></td>
-                {% endif %}
-                {% if venue.contacts %}
-                <td>{{ venue.contacts }}</td>
-                {% else %}
-                <td></td>
-                {% endif %}
-                <td>
-                    <form method="POST">
-                        <input type="hidden" class="form-control" id="venue_id" placeholder="" name="venue_id" value="{{ venue.id }}">
-                        <input type="submit" class="btn btn-danger" value="Зарегистрироваться" >
-                        {% csrf_token %}
-                    </form>
 
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<body>
+<div class="page">
+    {% include "layouts/header.html" %}
+    {% include "layouts/navigation_bar.html" %}
+    <section class="stage">
+        <h1 class="stage__name">{{ stage.name }}</h1>
+        <div class="stage__field">
+            <label class="stage__label">Описание:</label>
+            <p class="stage__textarea">
+                {% if stage.description %}{{ stage.description }}{% else %}<i>Пусто</i>{% endif %}</p>
+        </div>
+        <div class="stage__field">
+            <label class="stage__label">Контакты:</label>
+            <p class="stage__textarea">{% if stage.contacts %}{{ stage.contacts }}{% else %}<i>Пусто</i>{% endif %}</p>
+        </div>
+        <div class="stage__field">
+            <label class="stage__label stage__label_time">Сроки проведения:</label>
+            <p class="stage__time">{% if stage.time_start %}{{ stage.time_start }}{% else %}Неизвестно{% endif %} -
+                {% if stage.time_end %}{{ stage.time_end }}{% else %}Неизвестно{% endif %}</p>
+        </div>
+        <div class="stage__venue-list">
+            <table class="table">
+                <thead class="table__head">
+                <tr class="table__row">
+                    <th class="table__title">Название</th>
+                    <th class="table__title">Адрес</th>
+                    <th class="table__title">Регион</th>
+                    <th class="table__title">Вместимость</th>
+                    <th class="table__title">Контакты</th>
+                    <th class="table__title">Действие</th>
+                </tr>
+                </thead>
+                <tbody class="table__body">
+                {% for venue in venues_list %}
+                    <tr class="table__row">
+                        <th class="table__title">{{ venue.name }}</th>
+                        <td class="table__data">{{ venue.address }}</td>
+                        <td class="table__data">{% if venue.region %}{{ venue.region }}{% else %}{% endif %}</td>
+                        <td class="table__data">{% if venue.participants_maximum %}
+                            {{ venue.participants_maximum }}{% else %}{% endif %}</td>
+                        <td class="table__data">{% if venue.contacts %}{{ venue.contacts }}{% else %}{% endif %}</td>
+                        <td class="table__data">
+                            {% if can_register %}
+                                <form method="POST">
+                                    <input type="hidden" class="form-control" name="venue_id" value="{{ venue.id }}">
+                                    <button type="submit" class="table__button">Зарегистрироваться</button>
+                                    {% csrf_token %}
+                                </form>
+                            {% else %}
+                                Недоступно
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 </body>
 </html>

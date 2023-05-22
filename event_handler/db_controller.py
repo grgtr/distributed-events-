@@ -16,10 +16,11 @@ ITEMS_PER_PAGE = 12  # Количество объектов в одной ст�
 
 import itertools
 
+
 def get_list_results_by_stage(stage_id: int):
     info_stage = get_stage_by_id(stage_id)
-    #participants = StageParticipants.objects.filter(stage=stage_id).values_list('user', 'role', 'score')
-    #participants = StageParticipants.objects.filter(stage=stage_id).order_by('score').values_list('user', 'role', 'score').reverse()
+    # participants = StageParticipants.objects.filter(stage=stage_id).values_list('user', 'role', 'score')
+    # participants = StageParticipants.objects.filter(stage=stage_id).order_by('score').values_list('user', 'role', 'score').reverse()
     participants = StageParticipants.objects.filter(stage=stage_id).order_by('-role', '-score')
     answer = []
     for index, participant in enumerate(participants):
@@ -30,11 +31,12 @@ def get_list_results_by_stage(stage_id: int):
             role = "Призер"
         else:
             role = "Победитель"
-        list = namedtuple("namedtuplelist","num name_all status_score total_score")
-        #answer.append((index + 1, participant.user.personal_data, role, participant.score))
-        answer.append(list(num=(index + 1), name_all=(participant.user.personal_data), status_score=(role), total_score=(participant.score)))
+        list = namedtuple("namedtuplelist", "num name_all status_score total_score")
+        # answer.append((index + 1, participant.user.personal_data, role, participant.score))
+        answer.append(list(num=(index + 1), name_all=(participant.user.personal_data), status_score=(role),
+                           total_score=(participant.score)))
     # (user, role, score)
-    #print(participants, "participants")
+    # print(participants, "participants")
     return answer
 
 
@@ -129,6 +131,10 @@ def get_user_stages(user: User, user_role=0):
     return stages
 
 
+def is_user_participates_in_stage(user: User, stage: Stage) -> bool:
+    return len(StageParticipants.objects.filter(user=user, stage=stage)) != 0
+
+
 def get_events_by_role(django_user: DjangoUser = None, user_role=0) -> Union[List, Union[Tuple, Event, Stage, int]]:
     """
     Получить список всех мероприятий по заданным параметрам
@@ -193,6 +199,7 @@ def check_user_participate_in_stage(django_user: User, stage: Stage) -> bool:
     if stage in map(lambda stage_part: stage_part.stage, get_user_stages(get_user_by_django_user(django_user))):
         return True
     return False
+
 
 def get_stage_by_id(stage_id: int):
     return Stage.objects.get(id=stage_id)
