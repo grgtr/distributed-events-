@@ -1,0 +1,7 @@
+.sub-bar {
+    background-color: rgb(54, 54, 194);
+    min-height: 44px;
+    display: flex;
+    justify-content: end;
+    padding-right: 50px;
+}

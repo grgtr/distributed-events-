@@ -1,0 +1,13 @@
+.header__profile-link {
+    margin: 0;
+
+    text-decoration: none;
+    color: aliceblue;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.header__profile-link:hover {
+    color: aliceblue;
+    opacity: .9;
+}

@@ -1,0 +1,43 @@
+@import url("../../vendor/normalize.css");
+
+@import url("../blocks/header/header.css");
+@import url("../blocks/header/__profile-link/header__profile-link.css");
+@import url("../blocks/navbar/navbar.css");
+@import url("../blocks/navbar/__element/navbar__element.css");
+
+@import url("../blocks/sub-bar/sub-bar.css");
+
+body {
+    background-color: #f6f5f3;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  
+.handler {
+    margin-top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.btn-add {
+    display: block;
+    margin: 30px auto;
+    width: 200px;
+    height: 45px;
+    border-radius: 10px;
+    color: #ffffff;
+    border-color: rgb(41, 195, 41);
+    background-color: rgb(41, 195, 41);
+}
+
+.event-name {
+   margin-top: 30px;
+   margin-left: 60px;
+   font-size: 36px;
+   font-weight: bold;
+   text-align: left;
+   margin-bottom: 10px;
+}

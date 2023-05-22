@@ -1,0 +1,6 @@
+.popup__container_pictured {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    min-width: 0;
+}

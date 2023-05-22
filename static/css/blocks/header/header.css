@@ -1,0 +1,10 @@
+.header {
+    min-height: 62px;
+
+    background-color: darkblue;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+    align-items: center;
+}
