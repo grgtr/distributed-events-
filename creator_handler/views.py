@@ -371,12 +371,15 @@ def edit_stage(request, event_id: int):
     if request.method != "POST":
         return JsonResponse({}, status=403)
     try:
-        stage_id = json_load(request)["stage_id"]
-        name = json_load(request)["name"]
-        description = json_load(request)["description"]
-        contacts = json_load(request)["contacts"]
-        can_register = json_load(request)["can_register"]
-        edit_stage(stage_id, name, description, contacts, can_register)
+        request = json_load(request)
+        stage_id = request["stage_id"]
+        name = request["name"]
+        description = request["description"]
+        contacts = request["contacts"]
+        # can_register = json_load(request)["can_register"]
+        can_register = True
+        update_stage(stage_id, name, description, contacts, can_register)
+        return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
         return JsonResponse({"errors": "undefined"}, status=400)

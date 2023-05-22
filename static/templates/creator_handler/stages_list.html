@@ -13,7 +13,7 @@
 <main>
     {% include "layouts/navigation_bar.html" %}
     <h1 class="event-name">Этапы {{ event.name }}</h1>
-    <div class="stage-list">
+    <div class="stage-list" id={{ stage.id }}>
         {% for stage, indent in stages_list %}
             <div class="stage-list__stage">
                 {% if stage.id > -1 %}
@@ -21,18 +21,36 @@
                         {% for item in ""|ljust:indent %}
                             <span>==</span>
                         {% endfor %}
-                        id - {{ stage.id }}, отступ - {{ indent }}
+                        id - {{ stage.id }}, name = {{stage.name}}
                         <button class="stage__button_type_add" type="button" stage_id= {{ stage.id }}>Создать</button>
                         {% if indent > 0 %}
                             <button class="stage__button_type_delete" type="button" stage_id= {{ stage.id }}>Удалить</button>
                         {% endif %}
+                        <button class="stage__button_type_edit" type="button" stage_id= {{ stage.id }}>Изменить</button>
                     </p>
                 {% endif %}
             </div>
         {% endfor %}
     </div>
 </main>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div class="popup" type="card">
+    <div class="popup__container">
+        <button type="button" class="button popup__close-button"></button>
+        <h2 class="popup__title">Изменить этап</h2>
+        <form novalidate name="popup-form" class="popup__form">
+            <fieldset class="popup__form-fieldset">
+                <input required minlength=2 maxlength=30 placeholder="Название" name="name" type="text" class="popup__form-field">
+                <span class="popup__error name-input-error"></span>
+                <input required minlength=2 maxlength=300 placeholder="Описание" name="description" type="text" class="popup__form-field">
+                <span class="popup__error link-input-error"></span>
+                <input required minlength=2 maxlength=100 placeholder="Контакты" name="contacts" type="text" class="popup__form-field">
+                <span class="popup__error name-input-error"></span>
+                <button type="submit" class="button popup__form-submit">Изменить</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
 <script src="{% static 'source/stages_list.js' %}">
 </script>
 </body>

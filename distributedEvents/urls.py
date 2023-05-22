@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 from event_handler import views
 from user_handler import views as user_views
 from creator_handler import views as creator_views
-
 urlpatterns = [
     # path('test/', creator_views.test, name='test'),
     path('admin/', admin.site.urls),
@@ -49,9 +48,9 @@ urlpatterns = [
     path('event/<int:event_id>/edit/stages/', creator_views.stages_list, name="stages_list"),
     path('event/<int:event_id>/edit/stages/create', creator_views.create_stage, name="create_stage"),
     path('event/<int:event_id>/edit/stages/delete', creator_views.delete_stage, name="delete_stage"),
-
+    path('event/<int:event_id>/edit/stages/edit', creator_views.edit_stage, name="edit_stage"),
     # path('event/<int:event_id>/edit/stages/', creator_views.stages_list, name="test"),
-    # path('event/<int:event_id>/edit/stages/edit/<int:venue_id>', creator_views.edit_stage, name="edit_stage"),
+
     # path('event/<int:event_id>/edit/stages/create', creator_views.create_stage, name="create_stage"),
     # path('event/<int:event_id>/edit/stages/delete', creator_views.delete_stage, name="delete_stage"),
     path('event/<int:event_id>/edit/staff', creator_views.view_staff, name="view_staff"),
@@ -65,3 +64,4 @@ urlpatterns = [
 
     path('event/<int:event_id>/edit/participants/make_newsletter', creator_views.make_newsletter, name='make_newsletter')
 ]
+
