@@ -166,7 +166,25 @@ def view_staff(request, event_id):
     :return: html страница
     """
 
-    context = {"navigation_buttons": NAVIGATE_BUTTONS }
+    context = {
+        "navigation_buttons":     [
+            {
+                'name': "Участники",
+                'href': "participants"
+            },
+            {
+                'name': "Площадки",
+                'href': "venue"
+            },
+            {
+                'name': "Персонал",
+                'href': "staff"
+            },
+            {
+                'name': "Этапы",
+                'href': "stages"
+            }
+    ]}
     # context["staff_list"] = get_staff_by_stage(stage_id)
 
     return render(request, 'creator_handler/view_staff.html', context)
