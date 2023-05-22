@@ -1,5 +1,5 @@
 function deleteStage(stage) {
-    fetch(document.URL + "delete",
+    return fetch(document.URL + "delete",
          {
              method: "POST",
              body: JSON.stringify({
@@ -11,7 +11,7 @@ function deleteStage(stage) {
 }
 
 function createStage(next_stage) {
-    fetch(document.URL + "create",
+    return fetch(document.URL + "create",
          {
              method: "POST",
              body: JSON.stringify({
@@ -27,12 +27,20 @@ const delete_buttons = document.querySelectorAll(".stage__button_type_delete")
 
 for (const btn of add_buttons) {
     btn.addEventListener("click", () => {
-        createStage(btn.getAttribute("stage_id"));
+        createStage(btn.getAttribute("stage_id"))
+            .then(() => {
+                setTimeout(() => {document.location.reload()}, 500);
+            }
+            );
     })
 }
 for (const btn of delete_buttons) {
     btn.addEventListener("click", () => {
-        deleteStage(btn.getAttribute("stage_id"));
+        deleteStage(btn.getAttribute("stage_id"))
+        .then( () => {
+            setTimeout(() => {document.location.reload()}, 500);
+        }
+        );
     })
 }
 
@@ -48,3 +56,61 @@ function getCookie(c_name) {
     }
     return "";
 }
+
+
+function openPopup(popupToOpen) {
+    popupToOpen.classList.add('popup_opened');
+    document.addEventListener('keydown', onEscapePressed);
+}
+
+
+function closePopup(popupToClose) {
+    popupToClose.classList.remove('popup_opened');
+    document.removeEventListener('keydown', onEscapePressed);
+} 
+
+function onEscapePressed (evt) {
+    if (evt.key === "Escape") {
+        const popupToClose = document.querySelector('.popup_opened');
+        closePopup(popupToClose);
+    }
+}
+
+
+const editButtons = document.querySelectorAll(".stage__button_type_edit");
+const editPopup = document.querySelector('.popup');
+
+let editingStage = -1;
+let stageObject;
+const closeButton = document.querySelector(".popup__close-button")
+closeButton.addEventListener('click', () => {closePopup(editPopup)})
+
+for (const btn of editButtons) {
+    btn.addEventListener('click', (evt) => {
+        editingStage = evt.target.getAttribute("stage_id");
+        stageObject = evt.target.closest('.stage');
+        openPopup(editPopup);
+    }) 
+}
+
+editPopup.querySelector('.popup__form').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    fetch("./edit", {
+        method: "POST",
+        body: JSON.stringify({
+            stage_id: editingStage,
+            description: evt.target.description.value,
+            name: evt.target.name.value,
+            contacts: evt.target.contacts.value
+        }),
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    }).then( (res) =>{
+
+        if (res.ok){
+            closePopup(editPopup);
+            setTimeout(() => {document.location.reload()}, 500);
+        }
+    }
+    )
+})

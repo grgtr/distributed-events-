@@ -7,6 +7,31 @@
 
 @import url("../blocks/sub-bar/sub-bar.css");
 
+
+@import url("../blocks/button/button.css");
+
+@import url("../blocks/popup/popup.css");
+@import url("../blocks/popup/_type/popup_type_picture.css");
+@import url("../blocks/popup/_type/popup_type_avatar.css");
+@import url("../blocks/popup/_opened/popup_opened.css");
+@import url("../blocks/popup/__container/popup__container.css");
+@import url("../blocks/popup/__close-button/popup__close-button.css");
+@import url("../blocks/popup/__title/popup__title.css");
+@import url("../blocks/popup/__form/popup__form.css");
+@import url("../blocks/popup/__form-field/popup__form-field.css");
+@import url("../blocks/popup/__form-fieldset/popup__form-fieldset.css");
+@import url("../blocks/popup/__form-submit/popup__form-submit.css");
+@import url("../blocks/popup/__container/_pictured/popup__container_pictured.css");
+@import url("../blocks/popup/__picture/popup__picture.css");
+@import url("../blocks/popup/__picture-description/popup__picture-description.css");
+@import url("../blocks/popup/__form-submit/_disabled/popup__form-submit_disabled.css");
+@import url("../blocks/popup/__error/popup__error.css");
+@import url("../blocks/popup/__error/_active/popup__error_active.css");
+@import url("../blocks/popup/__form-field/_error/popup__form-field_error.css");
+
+
+
+
 body {
     background-color: #f6f5f3;
     font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
