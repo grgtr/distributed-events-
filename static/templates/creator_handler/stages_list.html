@@ -21,7 +21,7 @@
                         {% for item in ""|ljust:indent %}
                             <span>==</span>
                         {% endfor %}
-                        id - {{ stage.id }}, name = {{stage.name}}
+                        id - {{ stage.id }}, name:  <a href="../../stage/{{ stage.id }}/all_participants">{{stage.name}}</a>
                         <button class="stage__button_type_add" type="button" stage_id= {{ stage.id }}>Создать</button>
                         {% if indent > 0 %}
                             <button class="stage__button_type_delete" type="button" stage_id= {{ stage.id }}>Удалить</button>

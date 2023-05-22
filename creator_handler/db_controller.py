@@ -11,9 +11,10 @@ from event_handler.db_controller import get_user_by_django_user, get_stages_by_e
 
 
 def get_participants_by_event(event: Event):
-    stage = get_stages_by_event(event).first()
-    return StageParticipants.objects.filter(stage=stage)
-
+    stages = get_stages_by_event(event)
+    stage_ids = [stage.id for stage in stages]
+    stage_participants = StageParticipants.objects.filter(stage__in=stage_ids)
+    return stage_participants
 
 def get_staff_by_event(event: Event):
     stage = get_stages_by_event(event).first()

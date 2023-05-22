@@ -31,10 +31,16 @@ def get_list_results_by_stage(stage_id: int):
             role = "Призер"
         else:
             role = "Победитель"
-        list = namedtuple("namedtuplelist", "num name_all status_score total_score")
-        # answer.append((index + 1, participant.user.personal_data, role, participant.score))
-        answer.append(list(num=(index + 1), name_all=(participant.user.personal_data), status_score=(role),
-                           total_score=(participant.score)))
+
+        list = namedtuple("namedtuplelist","num name_all status_score total_score")
+        #answer.append((index + 1, participant.user.personal_data, role, participant.score))
+        #print("here")
+        if participant.user.personal_data.name != "" and participant.user.personal_data.surname != "":
+            #print("participant.user.personal_data='", participant.user.personal_data,"'", sep='')
+            answer.append(list(num=(index + 1), name_all=participant.user.personal_data, status_score=(role), total_score=(participant.score)))
+        else:
+            #print("participant.user.username")
+            answer.append(list(num=(index + 1), name_all=participant.user, status_score=(role), total_score=(participant.score)))
     # (user, role, score)
     # print(participants, "participants")
     return answer
@@ -68,16 +74,29 @@ def get_open_or_closed_events(django_user: DjangoUser = None, is_open: bool = Tr
         user_events = get_user_events(user)
 
     result = list()
-    stages = Stage.objects.filter(settings__can_register=is_open)
-    parent_events_id = stages.values_list('parent', flat=True).distinct()
-    parents_event = Event.objects.filter(id__in=parent_events_id)
-
-    for event in parents_event:
-        if event in user_events:
+    stages_open = Stage.objects.filter(settings__can_register=True)
+    stages_closed = Stage.objects.filter(settings__can_register=False)
+    #print(stages_open)
+    #print(stages_closed)
+    events_opened_id = stages_open.values_list('parent', flat=True).distinct()
+    events_closed_id = Event.objects.exclude(id__in=events_opened_id).values_list('id', flat=True)
+    #print(events_opened_id)
+    #print(events_closed_id)
+    if is_open:
+        events_opened = Event.objects.filter(id__in=events_opened_id)
+        for event in events_opened:
             result.append((event, True))
-        else:
+    else:
+        events_closed = Event.objects.filter(id__in=events_closed_id)
+        for event in events_closed:
             result.append((event, False))
     return result
+    #for event_id in parents_event:
+                                         #    if event in user_events:
+    #        result.append((event, True))
+    #    else:
+    #        result.append((event, False))
+    #return result
 
 
 def get_all_events(django_user: DjangoUser = None) -> Union[List, Union[Tuple, Event, Stage, int]]:
