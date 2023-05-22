@@ -76,7 +76,7 @@ class Stage(models.Model):
     settings = models.OneToOneField(StageSettings, default=StageSettings, null=True, on_delete=models.CASCADE)
     time_start = models.DateTimeField(null=True, blank=True)
     time_end = models.DateTimeField(null=True, blank=True)
-    next_stage = models.ForeignKey("self", null=True, on_delete=models.DO_NOTHING)
+    next_stage = models.ForeignKey("self", null=True, on_delete=models.DO_NOTHING, blank=True)
 
     def __str__(self):
         return self.name
@@ -171,7 +171,7 @@ class StageParticipants(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     role = models.SmallIntegerField("Роль", choices=Roles.choices, default=Roles.PARTICIPANT)
     status = models.SmallIntegerField("Статус заявки", choices=Status.choices, default=Status.AWAITED)
-    score = models.SmallIntegerField("Количество баллов", null=True)
+    score = models.SmallIntegerField("Количество баллов", null=True, default=0)
     yandex_contest_id = models.CharField("Id в Яндекс.Контесте", blank=True, max_length=50)
 
     class Meta:

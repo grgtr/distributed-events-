@@ -66,16 +66,29 @@ def get_open_or_closed_events(django_user: DjangoUser = None, is_open: bool = Tr
         user_events = get_user_events(user)
 
     result = list()
-    stages = Stage.objects.filter(settings__can_register=is_open)
-    parent_events_id = stages.values_list('parent', flat=True).distinct()
-    parents_event = Event.objects.filter(id__in=parent_events_id)
-
-    for event in parents_event:
-        if event in user_events:
+    stages_open = Stage.objects.filter(settings__can_register=True)
+    stages_closed = Stage.objects.filter(settings__can_register=False)
+    #print(stages_open)
+    #print(stages_closed)
+    events_opened_id = stages_open.values_list('parent', flat=True).distinct()
+    events_closed_id = Event.objects.exclude(id__in=events_opened_id).values_list('id', flat=True)
+    #print(events_opened_id)
+    #print(events_closed_id)
+    if is_open:
+        events_opened = Event.objects.filter(id__in=events_opened_id)
+        for event in events_opened:
             result.append((event, True))
-        else:
+    else:
+        events_closed = Event.objects.filter(id__in=events_closed_id)
+        for event in events_closed:
             result.append((event, False))
     return result
+    #for event_id in parents_event:
+                                         #    if event in user_events:
+    #        result.append((event, True))
+    #    else:
+    #        result.append((event, False))
+    #return result
 
 
 def get_all_events(django_user: DjangoUser = None) -> Union[List, Union[Tuple, Event, Stage, int]]:
