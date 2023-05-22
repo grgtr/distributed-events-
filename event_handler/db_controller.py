@@ -52,7 +52,7 @@ def get_info_event(event_id: int) -> Union[Event]:
 
 
 def get_open_or_closed_events(django_user: DjangoUser = None, is_open: bool = True) -> Union[
-    List, Union[Tuple, Event, Stage, int]]:
+    List, Union[Tuple, Event, int]]:
     """
     Получить список открытых или закрытых мероприятий по заданным параметрам
     :param django_user: Пользователь, сделавший запрос

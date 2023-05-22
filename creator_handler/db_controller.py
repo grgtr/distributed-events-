@@ -4,8 +4,11 @@ from user_handler.models import DjangoUser, User
 
 from django.core.exceptions import ObjectDoesNotExist
 from enum import Enum
+from typing import Union, List, Tuple, Set
 
-from event_handler.db_controller import get_user_by_django_user, get_stages_by_event, get_event_by_id, get_event_by_stage, get_stage_by_id
+from event_handler.db_controller import get_user_by_django_user, get_stages_by_event, get_event_by_id, \
+    get_event_by_stage, get_stage_by_id
+
 
 def get_participants_by_event(event: Event):
     stage = get_stages_by_event(event).first()
@@ -30,6 +33,7 @@ def get_venues_by_event(event_id: int):
 def get_venues_by_stage_id(stage_id: int):
     return Venue.objects.filter(parental_stage_id=stage_id)
 
+
 def get_venue_by_id(venue_id: int):
     return Venue.objects.get(id=venue_id)
 
@@ -47,7 +51,7 @@ def get_venue_by_id_dict(venue_id: int):
 
 def user_have_access(django_user: DjangoUser, event_id: int, setting=-1) -> bool:
     user = get_user_by_django_user(django_user)
-    #print(user)
+    # print(user)
     try:
         stage = get_stages_by_event(get_event_by_id(event_id)).filter(next_stage__isnull=True).first()
         staff = StageStaff.objects.get(user=user, stage=stage)
@@ -63,14 +67,14 @@ def user_have_access(django_user: DjangoUser, event_id: int, setting=-1) -> bool
         return False
 
 
-def create_venue(name: str, address: str, region: int, participants_maximum: int, contacts: str, event_id: int) -> None:
+def create_venue(name: str, address: str, region: int, participants_maximum: int, contacts: str, stage_id: int) -> None:
     try:
         Venue.objects.create(
             name=name,
             address=address,
             region=region,
             participants_maximum=participants_maximum,
-            parental_event=get_event_by_id(event_id),
+            parental_stage=get_stage_by_id(stage_id),
             contacts=contacts,
         )
     except Exception as e:
@@ -94,7 +98,7 @@ def is_venue_attached_to_event(event_id: int, venue_id: int) -> bool:
     try:
         venue = get_venue_by_id(venue_id)
         event_stages = get_stages_by_event(get_event_by_id(event_id))
-        #print(event_stages, "//", venue, "//",venue.parental_stage, "//", event_id)
+        # print(event_stages, "//", venue, "//",venue.parental_stage, "//", event_id)
         is_attached = False
         for stage in event_stages:
             if stage == venue.parental_stage:
@@ -147,7 +151,7 @@ def get_stage_subtree(stage: int, to_delete):
 def delete_stage_recursive(stage: int):
     to_delete = []
     get_stage_subtree(stage, to_delete)
-    #print(to_delete)
+    # print(to_delete)
     Stage.objects.filter(id__in=to_delete).delete()
 
 
@@ -227,3 +231,28 @@ def edit_stage(stage_id: int, name, description, contacts, can_register):
     stage.settings.can_register = can_register
     stage.save()
     stage.settings.save()
+
+
+def change_role_of_participation(yandex_contest_ids: Union[
+    List, str]) -> None:
+    StageParticipants.objects.filter(yandex_contest_id__in=yandex_contest_ids, status=200).update(
+        role=StageParticipants.Roles.AWARDEE)
+
+
+def transfer_participants_to_next_stage(stage_id: int, venue_id: int = -1) -> None:
+    stage = get_stage_by_id(stage_id)
+    next_stage = stage.next_stage
+
+    if venue_id == -1:
+        venues = Venue.objects.filter(parental_stage_id=next_stage.id)
+
+        if len(venues) == 0:
+            create_venue("Площадка для Яндекс.Контеста", "Яндекс.Контест", None, None, None, next_stage.id)
+            venues = Venue.objects.filter(parental_stage_id=next_stage.id)
+
+        venue_id = venues[0].id
+
+    awardees = StageParticipants.objects.filter(stage=stage, status=200, role__in=[StageParticipants.Roles.AWARDEE,
+                                                                                   StageParticipants.Roles.WINNER])
+    for awardee in awardees:
+        register_on_stage(next_stage.id, venue_id, awardee.user)
