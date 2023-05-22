@@ -32,7 +32,13 @@ def get_list_results_by_stage(stage_id: int):
             role = "Победитель"
         list = namedtuple("namedtuplelist","num name_all status_score total_score")
         #answer.append((index + 1, participant.user.personal_data, role, participant.score))
-        answer.append(list(num=(index + 1), name_all=(participant.user.personal_data), status_score=(role), total_score=(participant.score)))
+        print("here")
+        if participant.user.personal_data.name != "" and participant.user.personal_data.surname != "":
+            #print("participant.user.personal_data='", participant.user.personal_data,"'", sep='')
+            answer.append(list(num=(index + 1), name_all=participant.user.personal_data, status_score=(role), total_score=(participant.score)))
+        else:
+            #print("participant.user.username")
+            answer.append(list(num=(index + 1), name_all=participant.user, status_score=(role), total_score=(participant.score)))
     # (user, role, score)
     #print(participants, "participants")
     return answer

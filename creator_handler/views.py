@@ -77,7 +77,10 @@ def participants_list(request, event_id):
     if not user_have_access(request.user, event_id):
         return redirect('/404')
     event = get_event_by_id(event_id)
-    context = {'participants_list': get_participants_by_event(event),
+    participants_list = get_participants_by_event(event)
+
+
+    context = {'participants_list': participants_list,
                "navigation_buttons": NAVIGATE_BUTTONS,
                "event": event,
                }
