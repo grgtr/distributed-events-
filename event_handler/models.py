@@ -172,6 +172,7 @@ class StageParticipants(models.Model):
     role = models.SmallIntegerField("Роль", choices=Roles.choices, default=Roles.PARTICIPANT)
     status = models.SmallIntegerField("Статус заявки", choices=Status.choices, default=Status.AWAITED)
     score = models.SmallIntegerField("Количество баллов", null=True)
+    yandex_contest_id = models.CharField("Id в Яндекс.Контесте", blank=True, max_length=50)
 
     class Meta:
         """
