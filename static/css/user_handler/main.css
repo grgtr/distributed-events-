@@ -1,8 +1,12 @@
-﻿body,
-html {
- width:100%;
- height:100%
-}
+﻿@import url("../../vendor/normalize.css");
+
+@import url("../blocks/header/header.css");
+@import url("../blocks/header/__profile-link/header__profile-link.css");
+@import url("../blocks/navbar/navbar.css");
+@import url("../blocks/navbar/__element/navbar__element.css");
+
+@import url("../blocks/sub-bar/sub-bar.css");
+
 
 body {
   background-color: #f6f5f3;
@@ -35,10 +39,6 @@ ul {
   color: #cbd5db;
 }
 
-.site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
-}
-
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
 }
@@ -61,11 +61,6 @@ ul {
   color: #444444;
 }
 
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
-}
-
 .article-content {
   white-space: pre-line;
 }
@@ -82,10 +77,6 @@ a.article-title:hover {
   border-bottom: 1px solid #e3e3e3
 }
 
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
 
 .article-svg {
   width: 25px;
@@ -118,9 +109,6 @@ a.article-title:hover {
     margin-right: 10px!important;
     color: #f6f5f3d4!important;
     font-size: 20px!important;
-}
-.nav-link:hover {
-    color: #ffffff!important;
 }
 /*table*/
 .btn.btn-primary {

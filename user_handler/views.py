@@ -34,20 +34,7 @@ def register(request):  # place where the user can register
 
     context = {'page-name': 'Мои мероприятия(участник)',
                'form': form,
-               'navigation_buttons': [
-                   {
-                       'name': "Главная",
-                       'href': ".."
-                   },
-                   {
-                       'name': "Войти",
-                       'href': "../login/"
-                   },
-                   {
-                       'name': "О нас",
-                       'href': "https://hsse.mipt.ru/"
-                   },
-               ]
+               'navigation_buttons': []
                }
 
     return render(request, 'user_handler/register.html', context)
@@ -88,13 +75,14 @@ def profile(request):   # go to profile page
                'u_form': u_form,
                'navigation_buttons': [
                    {
-                       'name': 'О нас',
-                       'href': 'https://hsse.mipt.ru/'
+                       'name': 'Провожу',
+                       'href': '/profile/staff_event_list'
                    },
                    {
-                       'name': "Главная",
-                       'href': ".."
+                       'name': 'Участвую',
+                       'href': '/profile/participant_event_list'
                    },
+
                    {
                        'name': 'Выйти',
                        'href': '/logout'

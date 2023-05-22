@@ -1,13 +1,11 @@
-<div class="my-navbar">
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-        {% for item in navigation_buttons %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ item.href }}">{{ item.name }}</a>
-        </li>
-        {% endfor %}
-        </ul>
-    </div>
+<div class="sub-bar">
+  <nav>
+    <ul class="navbar">
+      {% for item in navigation_buttons %}
+      <li>
+        <a class="navbar__element" href="{{ item.href }}">{{ item.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
   </nav>
 </div>

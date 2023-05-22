@@ -25,7 +25,7 @@ from creator_handler import views as creator_views
 urlpatterns = [
     # path('test/', creator_views.test, name='test'),
     path('admin/', admin.site.urls),
-    path('create_event/', views.create_event, name='create_event'),
+    path('create-event/', views.create_event, name='create_event'),
 
     path('event/<int:event_id>', views.current_event, name="cur_event"),
     path('event/<int:event_id>/stage/<int:stage_id>', views.current_stage, name="current_stage"),
@@ -35,9 +35,9 @@ urlpatterns = [
 
 
     path('register/', user_views.register, name='register'),
-    path('user_profile/', user_views.profile, name='user_profile'),
-    path('user_profile/participant_event_list', views.participant_event_list, name='participant_event_list'),
-    path('user_profile/staff_event_list', views.staff_event_list, name='staff_event_list'),
+    path('profile/', user_views.profile, name='profile'),
+    path('profile/participant_event_list', views.participant_event_list, name='participant_event_list'),
+    path('profile/staff_event_list', views.staff_event_list, name='staff_event_list'),
     path('login/', auth_views.LoginView.as_view(template_name='user_handler/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='user_handler/logout.html'), name='logout'),
 
