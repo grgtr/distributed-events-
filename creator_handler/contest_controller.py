@@ -34,3 +34,16 @@ def get_participants(contest_id):
         return []
     result = result.json()
     return result.get("rows")
+
+
+def register_participants(contest_id, login_list):
+    if not contest_id:
+        print("No contest!")
+        return
+    for login in login_list:
+        addition = requests.post((config["baseUrl"] + f"/contests/{contest_id}/participants"),
+                                 headers=config["headers"],
+                                 data={"login": login})
+        if addition.ok:
+            print("Added login", login)
+

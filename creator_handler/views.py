@@ -402,4 +402,4 @@ def commit_stage(request, event_id, stage_id):
         return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
-        return JsonResponse({'errors': e}, status=500)
+        return JsonResponse({'errors': "something went wrong"}, status=500)

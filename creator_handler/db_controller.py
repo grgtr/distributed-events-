@@ -18,6 +18,7 @@ def get_participants_by_event(event: Event):
     stage_participants = StageParticipants.objects.filter(stage__in=stage_ids)
     return stage_participants
 
+
 def get_staff_by_event(event: Event):
     stage = get_stages_by_event(event).first()
     return [] if stage.users is None else stage.users
@@ -280,6 +281,7 @@ def init_participants_id(stage):
 
 def end_stage(stage, end_score):
     if not stage.settings.contest_id:
+        print("No contest")
         return
     init_participants_id(stage)
     contest_id = stage.settings.contest_id
@@ -299,12 +301,15 @@ def end_stage(stage, end_score):
             id_to_paticipants[str(info['id'])].save()
         except Exception as e:
             print(e, info)
-    if stage.next_stage:
-        transfer_participants_to_next_stage(stage.id)
 
+    if not stage.next_stage:
+        return
+    transfer_participants_to_next_stage(stage.id)
+    awardees = StageParticipants.objects.filter(stage=stage,
+                                                status=200, role__in=[StageParticipants.Roles.AWARDEE,
+                                                                      StageParticipants.Roles.WINNER])
 
-
-
-
-
-
+    login_list = list()
+    for awardee in awardees:
+        login_list.append(awardee.user.user.email)
+    contest.register_participants(stage.next_stage.settings.contest_id, login_list)
