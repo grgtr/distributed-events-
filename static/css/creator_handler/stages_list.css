@@ -47,15 +47,29 @@ body {
     margin-bottom: 30px;
 }
 
-.btn-add {
-    display: block;
-    margin: 30px auto;
-    width: 200px;
-    height: 45px;
+.stage-list {
+    margin-left: 50px;
+}
+
+.indent {
+    width: 50px;
+    backdrop-color: red;
+    display: inline-block;
+}
+
+.link {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.stage__button {
+    font-size: 20px;
+    padding: 5px;
     border-radius: 10px;
-    color: #ffffff;
-    border-color: rgb(41, 195, 41);
-    background-color: rgb(41, 195, 41);
+}
+
+.stage__button:hover {
+    opacity: 0.7;
 }
 
 .event-name {
