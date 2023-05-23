@@ -218,9 +218,12 @@ def get_event_by_stage(stage: Stage) -> Event:
 
 
 def check_user_participate_in_stage(django_user: User, stage: Stage) -> bool:
-    if stage in map(lambda stage_part: stage_part.stage, get_user_stages(get_user_by_django_user(django_user))):
-        return True
-    return False
+    try:
+        if stage in map(lambda stage_part: stage_part.stage, get_user_stages(get_user_by_django_user(django_user))):
+            return True
+        return False
+    except Exception:
+        return False
 
 
 def get_stage_by_id(stage_id: int):
