@@ -9,6 +9,8 @@ from typing import Union, List, Tuple, Set
 from event_handler.db_controller import get_user_by_django_user, get_stages_by_event, get_event_by_id, \
     get_event_by_stage, get_stage_by_id
 
+import creator_handler.contest_controller as contest
+
 
 def get_participants_by_event(event: Event):
     stages = get_stages_by_event(event)
@@ -257,3 +259,52 @@ def transfer_participants_to_next_stage(stage_id: int, venue_id: int = -1) -> No
                                                                                    StageParticipants.Roles.WINNER])
     for awardee in awardees:
         register_on_stage(next_stage.id, venue_id, awardee.user)
+
+
+def init_participants_id(stage):
+    if not stage.settings.contest_id:
+        return
+    participants = StageParticipants.objects.filter(stage=stage)
+    email_to_participant = dict()
+    for participant in participants:
+        email_to_participant[participant.user.user.email] = participant
+    contest_participants = contest.get_participants(stage.settings.contest_id)
+    for participant in contest_participants:
+        participant = participant['participantInfo']
+        try:
+            email_to_participant[participant["login"]].yandex_contest_id = participant["id"]
+            email_to_participant[participant["login"]].save()
+        except Exception as e:
+            print(e, f"User: {participant['login']}")
+
+
+def end_stage(stage, end_score):
+    if not stage.settings.contest_id:
+        return
+    init_participants_id(stage)
+    contest_id = stage.settings.contest_id
+    score_board = contest.get_standings(contest_id)
+
+    participants = StageParticipants.objects.filter(stage=stage)
+    id_to_paticipants = dict()
+    for participant in participants:
+        id_to_paticipants[participant.yandex_contest_id] = participant
+    for score in score_board:
+        info = score['participantInfo']
+        score = score['score']
+        try:
+            id_to_paticipants[str(info['id'])].score = int(score)
+            if (int(score)) >= end_score:
+                id_to_paticipants[str(info['id'])].role = StageParticipants.Roles.AWARDEE
+            id_to_paticipants[str(info['id'])].save()
+        except Exception as e:
+            print(e, info)
+    if stage.next_stage:
+        transfer_participants_to_next_stage(stage.id)
+
+
+
+
+
+
+

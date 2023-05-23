@@ -46,6 +46,7 @@ urlpatterns = [
     path('event/<int:event_id>/edit/venue/delete', creator_views.delete_venue, name="delete_venue"),
 
     path('event/<int:event_id>/edit/stages/', creator_views.stages_list, name="stages_list"),
+    path('event/<int:event_id>/edit/stages/<stage_id>/end', creator_views.commit_stage, name="end_stage"),
     path('event/<int:event_id>/edit/stages/create', creator_views.create_stage, name="create_stage"),
     path('event/<int:event_id>/edit/stages/delete', creator_views.delete_stage, name="delete_stage"),
     path('event/<int:event_id>/edit/stages/edit', creator_views.edit_stage, name="edit_stage"),

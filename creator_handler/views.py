@@ -350,7 +350,7 @@ def create_stage(request, event_id: int):
         return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
-        return JsonResponse({"errors": "undefined"}, status=400)
+        return JsonResponse({"errors": "undefined"}, status=500)
 
 
 @login_required(login_url="login")
@@ -362,9 +362,10 @@ def delete_stage(request, event_id: int):
     try:
         stage_id = json_load(request)["stage_id"]
         delete_stage_recursive(stage_id)
+        return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
-        return JsonResponse({"errors": "undefined"}, status=400)
+        return JsonResponse({"errors": "undefined"}, status=500)
 
 
 @login_required(login_url="login")
@@ -385,4 +386,20 @@ def edit_stage(request, event_id: int):
         return JsonResponse({}, status=200)
     except Exception as e:
         print(e)
-        return JsonResponse({"errors": "undefined"}, status=400)
+        return JsonResponse({"errors": "undefined"}, status=500)
+
+
+
+@login_required(login_url="login")
+def commit_stage(request, event_id, stage_id):
+    stage = get_stage_by_id(stage_id)
+    if not user_have_access(request.user, event_id) or event_id != get_event_by_stage(stage).id:
+        return error404(request)
+    # if request.method != "POST":
+    #     return JsonResponse({}, status=403)
+    try:
+        end_stage(stage, 1)
+        return JsonResponse({}, status=200)
+    except Exception as e:
+        print(e)
+        return JsonResponse({'errors': e}, status=500)
