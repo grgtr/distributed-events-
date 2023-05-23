@@ -114,3 +114,25 @@ editPopup.querySelector('.popup__form').addEventListener('submit', (evt) => {
     }
     )
 })
+
+const endButtons = Array.from(document.querySelectorAll('.stage__button_type_end'))
+console.log(endButtons)
+endButtons.forEach((btn) => {
+    btn.addEventListener('click', (evt) => {
+        btn.innerText = "Завершаем..."
+        fetch("./" + evt.target.getAttribute("stage_id") + "/end", {
+            method: "POST",
+            headers: { "X-CSRFToken": getCookie("csrftoken") }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(res.status);
+        }).catch((err) => {
+            setTimeout(() => {btn.innerText = "Ошибка..."}, 1500)
+        })
+        .finally((err) => {
+            setTimeout(() => {btn.innerText = "Завершить этап"}, 1500)
+        })
+    })
+})
