@@ -1,0 +1,5 @@
+.all-stage-list__links {
+    min-height: 200px;
+    border: 2px solid black;
+    padding: 0;
+}

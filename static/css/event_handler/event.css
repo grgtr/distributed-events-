@@ -1,12 +1,27 @@
-@import url("../../vendor/normalize.css");
+@import url(../../vendor/normalize.css);
 
-@import url("../blocks/header/header.css");
-@import url("../blocks/header/__profile-link/header__profile-link.css");
-@import url("../blocks/navbar/navbar.css");
-@import url("../blocks/navbar/__element/navbar__element.css");
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__profile-link/header__profile-link.css);
+@import url(../blocks/navbar/navbar.css);
+@import url(../blocks/navbar/__element/navbar__element.css);
 
-@import url("../blocks/sub-bar/sub-bar.css");
+@import url(../blocks/sub-bar/sub-bar.css);
 
+@import url(../blocks/all-stage-list/all-stage-list.css);
+@import url(../blocks/all-stage-list/__title/all-stage-list__title.css);
+@import url(../blocks/all-stage-list/__links/all-stage-list__links.css);
+@import url(../blocks/all-stage-list/__link/all-stage-list__link.css);
+@import url(../blocks/all-stage-list/__link/_end/all-stage-list__link_end.css);
+@import url(../blocks/all-stage-list/__link/_active/all-stage-list__link_active.css);
+@import url(../blocks/all-stage-list/__link/_waiting/all-stage-list__link_waiting.css);
+@import url(../blocks/all-stage-list/__stage-name/all-stage-list__stage-name.css);
+@import url(../blocks/open-stage-list/open-stage-list.css);
+@import url(../blocks/open-stage-list/__title/open-stage-list__title.css);
+@import url(../blocks/open-stage-list/__stage-cards/open-stage-list__stage-cards.css);
+@import url(../blocks/open-stage-list/__link/open-stage-list__link.css);
+@import url(../blocks/open-stage-list/__stage-card/open-stage-list__stage-card.css);
+@import url(../blocks/open-stage-list/__title/open-stage-list__title.css);
+@import url(../blocks/open-stage-list/__preview/open-stage-list__preview.css);
 
 body {
     background-color: #f6f5f3;
@@ -14,20 +29,19 @@ body {
     line-height: 1.5;
     font-size: 16px;
 }
-  
-.handler {
-    margin-top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 30px;
+
+.page {
+    min-width: 1100px;
 }
 
-.event-name {
-    margin-top: 30px;
-    margin-left: 60px;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 10px;
- }
+.page__title {
+    margin: 50px auto 0;
+    text-align: center;
+    font-size: 50px;
+}
+
+.main {
+    margin: 50px 50px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}

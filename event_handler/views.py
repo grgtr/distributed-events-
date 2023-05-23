@@ -318,16 +318,8 @@ def current_event(request, event_id):
         'active_status': Stage.Status.ACTIVE,
         'navigation_buttons': [
             {
-                'name': "Главная",
+                'name': "Вернуться назад",
                 'href': "/"
-            },
-            {
-                'name': "Создать мероприятие",
-                'href': "/create_event/"
-            },
-            {
-                'name': "Профиль",
-                'href': "/user_profile"
             }
         ]
     }

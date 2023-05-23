@@ -1,0 +1,6 @@
+.all-stage-list__stage-name {
+    list-style-type: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

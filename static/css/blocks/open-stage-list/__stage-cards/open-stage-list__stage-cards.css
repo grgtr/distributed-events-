@@ -1,0 +1,6 @@
+.open-stage-list__stage-cards {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}

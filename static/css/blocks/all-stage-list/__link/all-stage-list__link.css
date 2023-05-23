@@ -1,0 +1,9 @@
+.all-stage-list__link {
+    padding-top: 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+.all-stage-list__link:hover {
+    opacity: 0.7;
+}

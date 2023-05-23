@@ -1,3 +1,12 @@
+@import url(../../vendor/normalize.css);
+
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__profile-link/header__profile-link.css);
+@import url(../blocks/navbar/navbar.css);
+@import url(../blocks/navbar/__element/navbar__element.css);
+
+@import url(../blocks/sub-bar/sub-bar.css);
+
 @import url(../blocks/stage/stage.css);
 @import url(../blocks/stage/__label/_time/stage__label_time.css);
 @import url(../blocks/stage/__name/stage__name.css);
@@ -10,6 +19,13 @@
 @import url(../blocks/table/__title/table__title.css);
 @import url(../blocks/table/__data/table__data.css);
 @import url(../blocks/table/__button/table__button.css);
+
+body {
+    background-color: #f6f5f3;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    line-height: 1.5;
+    font-size: 16px;
+}
 
 .page {
     min-width: 1100px;
