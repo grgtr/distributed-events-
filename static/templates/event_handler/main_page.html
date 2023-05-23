@@ -10,7 +10,7 @@
 </head>
 <body>
 {% include "layouts/header.html" %}
-<main>
+<main style="display: flex; flex-direction: column;">
   <div class="lots_of_events">
     <h1 class="handler">Открытые мероприятия</h1>
     {% for event, status in event_list_open %}
@@ -19,10 +19,12 @@
             <a class="event_name" href="/event/{{ event.id }}">{{ event.name }}</a>
             <h4 class="event_preview">{{ event.description }}</h4>
             <!--  <h4>{{ status }}</h4> -->
-            <a class="event_registration" href="/event/{{ event.id }}">зарегистрироваться</a>
+            <!-- <a class="event_registration" href="/event/{{ event.id }}">зарегистрироваться</a> -->
         </div>
     </div>
     {% endfor %}
+  </div>
+  <div class="lots_of_events">
     <h1 class="handler">Закрытые мероприятия</h1>
      {% for event, status in event_list_closed %}
     <div class="event_card-wrapper">
@@ -32,7 +34,8 @@
             <!--  <h4>{{ status }}</h4> -->
             <!-- <a class="event_registration" href="/event_registration/{{ event.id }}">зарегистрироваться</a> -->
         </div>
-    </div>
+  </div>
+    
     {% endfor %}
   </div>
 </main>
