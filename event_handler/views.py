@@ -30,6 +30,7 @@ NAVIGATE_BUTTONS = [
     }
 ]
 
+
 def error404(request):
     """
     Страница 404 - page not found
@@ -112,7 +113,7 @@ def all_events(request):
 def show_all_participants(request, event_id, stage_id):
     try:
         table = get_list_results_by_stage(stage_id)
-        #print(table)
+        # print(table)
     except Exception as e:
         print(e)
         return error404(request)
@@ -140,6 +141,7 @@ def show_all_participants(request, event_id, stage_id):
                }
     return render(request, 'event_handler/all_participants.html', context)
 
+
 def show_events(request):
     """
     Страница всех мероприятий
@@ -150,9 +152,8 @@ def show_events(request):
     :return: html страница
     """
 
-
-    #a = get_open_or_closed_events(request.user)
-    #print(a)
+    # a = get_open_or_closed_events(request.user)
+    # print(a)
 
     event_list_open = get_open_or_closed_events(request.user, True)
     event_list_closed = get_open_or_closed_events(request.user, False)
@@ -177,6 +178,7 @@ def show_events(request):
                }
 
     return render(request, 'event_handler/main_page.html', context)
+
 
 @login_required(login_url="login")
 def participant_event_list(request):
@@ -344,7 +346,9 @@ def current_stage_registration(request, stage_id):
     :type event_id: :class: 'int'
     :return: html страница
     """
-    if request.method == "POST":
+    stage = get_stage_by_id(stage_id)
+
+    if request.method == "POST" and can_user_register_on_stage(get_user_by_django_user(request.user), stage):
         form = RegistrateStageForm(request.POST)
         if form.is_valid():
             venue_id = form.cleaned_data['venue_id']
@@ -352,11 +356,10 @@ def current_stage_registration(request, stage_id):
             c_db.register_on_stage(stage_id, venue_id, user)
             return redirect('all_events')
 
-    stage = get_stage_by_id(stage_id)
     context = {
         'stage': stage,
         'venues_list': get_venues_by_stage_id(stage_id),
-        'can_register': not is_user_participates_in_stage(get_user_by_django_user(request.user), stage),
+        'can_register': can_user_register_on_stage(get_user_by_django_user(request.user), stage),
         'navigation_buttons': [
             {
                 'name': "Обратно к мероприятию",
@@ -366,6 +369,7 @@ def current_stage_registration(request, stage_id):
     }
 
     return render(request, 'event_handler/stage_registration.html', context)
+
 
 def current_stage(request, event_id, stage_id):
     """
@@ -380,7 +384,7 @@ def current_stage(request, event_id, stage_id):
 
     stage = get_stage_by_id(stage_id)
     venues_list = get_venues_by_stage_id(stage_id).values_list()
-    #print(venues_list)
+    # print(venues_list)
     context = {
         'stage': stage,
         'venues_list': venues_list,
