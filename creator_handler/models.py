@@ -40,6 +40,7 @@ class StageSettings(models.Model):
                                                            default=AccessLevel.PROVIDER)
     who_can_manage_mailing_list = models.SmallIntegerField("Кто может управлять рассылкой", choices=AccessLevel.choices,
                                                            default=AccessLevel.PROVIDER)
+    contest_id = models.TextField("ID контеста", default="", null=True, blank=True)
 
     def __str__(self):
         try:
